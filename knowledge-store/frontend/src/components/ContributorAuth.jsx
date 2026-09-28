@@ -10,22 +10,14 @@ export default function ContributorAuth({ children }) {
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState('');
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-
-      // Same rule flagged in the security review: also re-check this server-side
-      // before actually accepting an upload, since client checks can be bypassed.
-      if (!result.user.email.endsWith('.edu')) {
-        await signOut(auth);
-        setError('Only .edu email addresses are allowed to upload.');
-        return;
-      }
-    } catch (err) {
-      console.error(err);
-      setError('Sign-in failed. Please try again.');
-    }
-  };
+const handleGoogleSignIn = async () => {
+  try {
+    await signInWithPopup(auth, googleProvider);
+  } catch (err) {
+    console.error(err);
+    setError('Sign-in failed. Please try again.');
+  }
+};
 
   const claimUsername = async () => {
     const name = username.trim();

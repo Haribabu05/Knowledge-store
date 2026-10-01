@@ -13,6 +13,7 @@ export default function Dashboard({ category, personName }) {
 
   useEffect(() => {
     const q = query(collection(db, 'notes'), orderBy('createdAt', 'desc'));
+
     const unsubscribe = onSnapshot(
       q,
       (snap) => {
@@ -26,14 +27,23 @@ export default function Dashboard({ category, personName }) {
         setLoading(false);
       }
     );
+
     return unsubscribe;
   }, []);
 
   const filtered = useMemo(() => {
     const name = personName.trim().toLowerCase();
+
     return notes.filter((n) => {
-      const matchesCategory = !category || n.category === category;
-      const matchesName = !name || (n.uploaderUsername || '').toLowerCase().includes(name);
+      const matchesCategory =
+        !category || n.category === category;
+
+      const matchesName =
+        !name ||
+        (n.uploaderUsername || '')
+          .toLowerCase()
+          .includes(name);
+
       return matchesCategory && matchesName;
     });
   }, [notes, category, personName]);
@@ -48,19 +58,34 @@ export default function Dashboard({ category, personName }) {
   const filtersActive = Boolean(category || personName.trim());
 
   return (
-    <div className="max-w-5xl mx-auto px-4 pb-16">
+    <div className="w-full max-w-[1600px] mx-auto px-6 pb-16">
+
       <p className="mt-6 mb-3 text-sub dark:text-sub-dark text-sm">
-        <b className="text-ink dark:text-ink-dark">Notes</b> — {filtered.length}
+        <b className="text-ink dark:text-ink-dark">
+          Notes
+        </b>{' '}
+        — {filtered.length}
       </p>
 
-      {error && <p className="text-center text-red-500 text-sm my-10">{error}</p>}
+      {error && (
+        <p className="text-center text-red-500 text-sm my-10">
+          {error}
+        </p>
+      )}
 
       {loading && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="h-56 rounded-2xl border border-border dark:border-border-dark bg-card dark:bg-card-dark animate-pulse"
+              className="
+                h-56
+                rounded-2xl
+                border
+                border-border dark:border-border-dark
+                bg-card dark:bg-card-dark
+                animate-pulse
+              "
             />
           ))}
         </div>
@@ -68,21 +93,36 @@ export default function Dashboard({ category, personName }) {
 
       {!loading && !error && filtered.length === 0 && (
         <p className="text-center text-sub dark:text-sub-dark text-sm my-10">
-          {filtersActive ? 'No notes match that category or name.' : 'No notes yet. Be the first to upload one.'}
+          {filtersActive
+            ? 'No notes match that category or name.'
+            : 'No notes yet. Be the first to upload one.'}
         </p>
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {visible.map((note) => (
-          <NoteCard key={note.id} note={note} />
+          <NoteCard
+            key={note.id}
+            note={note}
+          />
         ))}
       </div>
 
       {hasMore && (
         <div className="flex justify-center mt-8">
           <button
-            onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-            className="px-6 py-3 rounded-lg border border-border dark:border-border-dark bg-card dark:bg-card-dark text-ink dark:text-ink-dark font-semibold"
+            onClick={() =>
+              setVisibleCount((c) => c + PAGE_SIZE)
+            }
+            className="
+              px-6 py-3
+              rounded-lg
+              border
+              border-border dark:border-border-dark
+              bg-card dark:bg-card-dark
+              text-ink dark:text-ink-dark
+              font-semibold
+            "
           >
             Load More Notes
           </button>

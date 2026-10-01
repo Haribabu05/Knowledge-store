@@ -7,7 +7,8 @@ export default function Header({ category, setCategory, personName, setPersonNam
   const { user, profile } = useAuth();
 
   return (
-    <div className="sticky top-[env(safe-area-inset-top,0px)] z-20 px-4 pt-4">
+    <div className="sticky top-[env(safe-area-inset-top,0px)] z-20 bg-page/95 dark:bg-page-dark/95 backdrop-blur-sm pb-3">
+    <div className="px-4 pt-4">
       <header className="mx-auto max-w-3xl rounded-2xl border border-border dark:border-border-dark bg-header dark:bg-header-dark shadow-sm px-4 py-3 flex flex-wrap items-center gap-3">
         <Link to="/" className="text-lg font-bold text-ink dark:text-ink-dark shrink-0">
           Knowledge <span className="text-accent dark:text-accent-dark">Store</span>
@@ -56,5 +57,6 @@ export default function Header({ category, setCategory, personName, setPersonNam
         </div>
       </header>
     </div>
+  </div>
   );
 }

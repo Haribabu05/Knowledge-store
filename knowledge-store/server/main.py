@@ -21,16 +21,13 @@ app.add_middleware(
 
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 
-credentials = service_account.Credentials.from_service_account_info(
-    {
-        "type": os.getenv("TYPE"),
-        "project_id": os.getenv("PROJECT_ID"),
-        "private_key_id": os.getenv("PRIVATE_KEY_ID"),
-        "private_key": os.getenv("PRIVATE_KEY", "").replace("\\n", "\n"),
-        "client_email": os.getenv("CLIENT_EMAIL"),
-        "client_id": os.getenv("CLIENT_ID"),
-        "token_uri": os.getenv("TOKEN_URI", "https://oauth2.googleapis.com/token"),
-    },
+
+from pathlib import Path
+
+SERVICE_ACCOUNT_FILE = Path(__file__).resolve().parent / "knowledge-store-a7eee-510513-abc8749c7ec9.json"
+
+credentials = service_account.Credentials.from_service_account_file(
+    SERVICE_ACCOUNT_FILE,
     scopes=SCOPES,
 )
 
@@ -47,18 +44,33 @@ async def upload_file(file: UploadFile = File(...)):
         raise HTTPException(400, "Only PDF files are accepted")
 
     file_bytes = await file.read()
-    media = MediaIoBaseUpload(io.BytesIO(file_bytes), mimetype=file.content_type, resumable=False)
+
+    media = MediaIoBaseUpload(
+
+    io.BytesIO(file_bytes),
+    mimetype=file.content_type,
+    resumable=True,
+    chunksize=1024 * 1024,  # 1 MB chunks
+
+    )
 
     try:
-        created = (
-            drive.files()
-            .create(
-                body={"name": file.filename, "parents": [folder_id]},
-                media_body=media,
-                fields="id, webViewLink, webContentLink",
-            )
-            .execute()
+
+        request = drive.files().create(
+
+        body={"name": file.filename, "parents": [folder_id]},
+        media_body=media,
+        fields="id, webViewLink, webContentLink",
+               
         )
+
+        response = None
+        while response is None:
+            status, response = request.next_chunk()
+
+
+
+        created = response
 
         # The step that was missing in the original Node version: without this,
         # every uploaded file stays private to the service account and no one

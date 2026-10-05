@@ -16,7 +16,7 @@ describe('filterNotes', () => {
 
   it('filters by category', () => {
     const result = filterNotes(notes, { category: 'Java' });
-    expect(result).toHaveLength(1);
+    expect(result).toHaveLength(1); 
     expect(result[0].title).toBe('Java Mid Sem Questions');
   });
 

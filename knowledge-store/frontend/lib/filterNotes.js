@@ -8,6 +8,6 @@ export function filterNotes(notes, { category = '', personName = '' } = {}) {
   return notes.filter((note) => {
     const matchesCategory = !category || note.category === category;
     const matchesName = !name || (note.uploaderUsername || '').toLowerCase().includes(name);
-    return matchesCategory && matchesName;
+      return matchesCategory && matchesName;
   });
 }

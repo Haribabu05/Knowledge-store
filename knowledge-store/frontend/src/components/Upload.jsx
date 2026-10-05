@@ -5,7 +5,9 @@ import { db } from '../firebase';
 import { useAuth } from './context/AuthContext';
 import ContributorAuth from './ContributorAuth';
 
-const CATEGORIES = ['Java', 'Discrete Mathematics', 'Data Structures', 'DBMS', 'Operating Systems'];
+const CATEGORIES = ['Java', 'Discrete Mathematics', 'DSA', 'DBMS', 'Operating Systems',  
+                    'computer networks', 'System desgin','Python', 'Spring Boot','C','C++', 'Design Pattern', 'others', 'Go'
+];
 
 function UploadForm() {
   const { user, profile } = useAuth();

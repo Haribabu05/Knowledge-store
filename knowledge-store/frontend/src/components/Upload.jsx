@@ -5,8 +5,21 @@ import { db } from '../firebase';
 import { useAuth } from './context/AuthContext';
 import ContributorAuth from './ContributorAuth';
 
-const CATEGORIES = ['Java', 'Discrete Mathematics', 'DSA', 'DBMS', 'Operating Systems',  
-                    'computer networks', 'System desgin','Python', 'Spring Boot','C','C++', 'Design Pattern', 'others', 'Go'
+const CATEGORIES = [
+  'Java',
+  'Discrete Mathematics',
+  'DSA',
+  'DBMS',
+  'Operating Systems',
+  'Computer Networks',
+  'System Design',
+  'Python',
+  'Spring Boot',
+  'C',
+  'C++',
+  'Design Pattern',
+  'Others',
+  'Go'
 ];
 
 function UploadForm() {

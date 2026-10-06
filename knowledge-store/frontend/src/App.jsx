@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import NotePage from './components/NotePage';
 import Upload from './components/Upload';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 export default function App() {
   const [category, setCategory] = useState('');
@@ -32,6 +33,8 @@ export default function App() {
           <Route path="/" element={<Dashboard category={category} personName={personName} />} />
           <Route path="/note/:id" element={<NotePage />} />
           <Route path="/upload" element={<Upload />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        
         </Routes>
       </div>
     </AuthProvider>

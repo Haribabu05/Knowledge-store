@@ -28,8 +28,7 @@ SCOPES = ["https://www.googleapis.com/auth/drive"]
 BASE_DIR = Path(__file__).resolve().parent
 
 # OAuth token belonging to YOUR Google account
-TOKEN_FILE = BASE_DIR / "token.json"
-
+TOKEN_FILE = Path(os.getenv("TOKEN_FILE_PATH", str(BASE_DIR / "token.json")))
 
 def get_drive_service():
     if not TOKEN_FILE.exists():
@@ -43,12 +42,13 @@ def get_drive_service():
     )
 
     # Refresh expired access token automatically
+
     if credentials.expired and credentials.refresh_token:
         credentials.refresh(Request())
-
-        # Save updated token
-        TOKEN_FILE.write_text(credentials.to_json())
-
+        try:
+            TOKEN_FILE.write_text(credentials.to_json())
+        except OSError:
+            pass
     if not credentials.valid:
         raise RuntimeError("Google OAuth credentials are invalid.")
 

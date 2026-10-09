@@ -14,7 +14,7 @@ export default function NoteCard({ note }) {
         w-full
         h-[300px]
         rounded-2xl
-        border border-border dark:border-border-dark
+        border-2 border-ink dark:border dark:border-border-dark
         bg-card dark:bg-card-dark
         shadow-sm
         p-5
@@ -52,32 +52,23 @@ export default function NoteCard({ note }) {
           {note.category}
         </span>
 
-        <div
-          className="
-            text-base
-            text-sub dark:text-sub-dark
-            mb-4
-          "
-        >
+        <div className="text-base text-sub dark:text-sub-dark">
           By:{' '}
           <b className="text-ink dark:text-ink-dark">
             {note.uploaderUsername}
           </b>
         </div>
 
+        <div className="text-sm text-sub dark:text-sub-dark mt-1">
+          {date}
+        </div>
+
         {/* BOTTOM */}
-        <div
-          className="
-            mt-auto
-            flex
-            items-center
-            justify-between
-            gap-3
-          "
-        >
+        <div className="mt-auto">
           <Link
             to={`/note/${note.id}`}
             className="
+              inline-block
               px-5 py-2.5
               rounded-lg
               bg-ink dark:bg-ink-dark
@@ -88,16 +79,6 @@ export default function NoteCard({ note }) {
           >
             View Note
           </Link>
-
-          <span
-            className="
-              text-sm
-              text-sub dark:text-sub-dark
-              whitespace-nowrap
-            "
-          >
-            {date}
-          </span>
         </div>
       </div>
 

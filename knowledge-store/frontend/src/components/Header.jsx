@@ -35,11 +35,11 @@ export default function Header({
 
         {/* Privacy Policy - outside the main header */}
         <Link
-          to="/privacy-policy"
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-medium text-ink/60 dark:text-ink-dark/60 hover:text-accent dark:hover:text-accent-dark"
-        >
-          Privacy Policy
-        </Link>
+  to="/privacy-policy"
+  className="hidden lg:block absolute left-4 top-1/2 -translate-y-1/2 text-xs font-medium text-ink/60 dark:text-ink-dark/60 hover:text-accent dark:hover:text-accent-dark"
+>
+  Privacy Policy
+</Link>
 
         {/* ORIGINAL HEADER */}
         <header className="mx-auto max-w-3xl rounded-2xl border border-border dark:border-border-dark bg-header dark:bg-header-dark shadow-sm px-4 py-3 flex flex-wrap items-center gap-3">
